@@ -41,6 +41,9 @@ func GetSyncOptions(annotations map[string]string) SyncOptions {
 		} else {
 			opts.NamespaceSelector = &v
 		}
+	} else {
+		// PATCH(zimbatm): if no annotations, default to sync
+		opts.NamespaceSelector = types.StringP(labels.Everything().String())
 	}
 	if contexts, _ := meta.GetStringValue(annotations, ConfigSyncContexts); contexts != "" {
 		opts.Contexts = sets.NewString(strings.Split(contexts, ",")...)
